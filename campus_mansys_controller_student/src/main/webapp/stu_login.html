@@ -29,11 +29,18 @@
            //学生登录
             stuLogin:function(){
                 var _this = this;
-                axios.post("/student/stuLogin",_this.student).then(function(response){
+                axios.post("/student/stuLogin.do",_this.student).then(function(response){
                     if(response.data.flag){
-
+                        /**
+                         * 成功了去main页面
+                         * @type {string}
+                         */
+                        location.href="page/main.html";
                     }else{
-
+                        /**
+                         * 没有成功重新登录，提醒一下用户，什么原因
+                         */
+                        alert(response.data.message);
                     }
                 }).catch(function(error){
                     console.log(error);
