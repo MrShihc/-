@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生登录界面</title>
+</head>
+<body>
+<center>
+    <h2>学生登录界面</h2>
+    <div id="studentLogin">
+        学生账户：<input type="text" v-model="student.saccount" /><br>
+        学生密码：<input type="password" v-model="student.spwd"><br>
+        <input type="button" value="登录" @click="stuLogin()">
+        <input type="reset" value="重置">
+    </div>
+</center>
+</body>
+<script type="text/javascript" src="vuejs/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="vuejs/axios-0.18.0.js"></script>
+<!-- 编写自己的vue代码 -->
+<script type="text/javascript">
+
+    var student = new Vue({
+       el:"#studentLogin",      //监管区域
+       data:{
+         student:{}
+       },
+        methods:{
+           //学生登录
+            stuLogin:function(){
+                var _this = this;
+                axios.post("/student/stuLogin",_this.student).then(function(response){
+                    if(response.data.flag){
+
+                    }else{
+
+                    }
+                }).catch(function(error){
+                    console.log(error);
+                })
+            },
+        }
+    });
+
+</script>
+</html>

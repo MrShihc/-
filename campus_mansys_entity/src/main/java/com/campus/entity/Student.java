@@ -36,7 +36,7 @@ public class Student implements Serializable {
     /**
      * 密码
      */
-    private String pwd;
+    private String spwd;
 
     /**
      * 身份证号
