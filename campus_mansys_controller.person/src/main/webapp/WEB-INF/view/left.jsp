@@ -29,7 +29,7 @@
 			}
 		},
 		check:{
-			enable:true
+			//enable:true
 		},
 		callback:{
 			onClick:zTreeClick//定义节点点击的事件为单击事件
@@ -53,7 +53,7 @@
 	  var path =currentSelectedNode.url;
 	 // alert(path);
 	  //alert(currentSelectedNode.pId); 
-	  parent.frames[3].location.href = path;
+	 // parent.frames[3].location.href = path;
 	  //parent.frames[3].location.href = currentSelectedNode.url;
 	   
 	};

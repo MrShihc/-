@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.mapper.StudentMapper">
+
+    <resultMap id="exammap" type="Exam">
+        <id column="examid" property="examid" />
+        <result column="ename" property="ename" />
+        <result column="etype" property="etype" />
+        <result column="efenzhi" property="efenzhi" />
+        <result column="testid" property="testid" />
+        <collection property="options" ofType="ExamOption">
+            <id column="optionid" property="optionid" />
+            <result column="oname" property="oname" />
+            <result column="istrue" property="istrue" />
+        </collection>
+    </resultMap>
+
+    <!-- 根据试卷id查询试题信息 -->
+    <select id="getTestInfoByTestid" resultMap="exammap">
+        SELECT
+            *
+        FROM
+            tb_exam a
+        LEFT JOIN tb_examoption b ON a.examid = b.examid
+        WHERE
+            a.testid = #{testid}
+    </select>
+
+    <!-- 保存学生作答信息 -->
+    <insert id="stuToSubmits">
+        INSERT INTO tb_student_test(sid,testid,cscore,stesttime,testendtime,crediskey)
+            VALUES(#{sid},#{testid},#{cscore},#{stesttime},#{testendtime},#{crediskey})
+        </insert>
+
+    <!-- 根据试卷id获取试卷信息 -->
+    <select id="getTestInfo" resultType="TestBean">
+        SELECT * FROM tb_test WHERE testid = #{testid}
+    </select>
+
+    <!-- 根据学生账户，实现学生登录功能 -->
+    <select id="getLogin" resultType="Student">
+        SELECT * FROM tb_student WHERE saccount = #{saccount}
+    </select>
+
+    <!-- 根据角色id查询该学生可以看到的菜单 -->
+    <select id="getStuMenuInfo" resultType="MenuBean">
+    SELECT
+        b.*
+    FROM
+        tb_role_menu a
+    LEFT JOIN tb_menu b ON a.mid = b.mid
+    WHERE
+        a.rid = #{rid}
+    </select>
+
+    <!-- 根据学生id查询出该学生的考试信息
+     (SELECT e.*,f.* FROM tb_student a
+LEFT JOIN tb_student_grade b ON a.sid = b.sid
+LEFT JOIN tb_grade c ON b.gid = c.gid
+LEFT JOIN tb_test_grade d ON c.gid = d.gid
+LEFT JOIN tb_test e ON d.testid = e.testid
+left join tb_student_test f on f.testid = e.testid and f.sid = b.sid
+WHERE starttime > (select NOW()) and
+	 a.sid = 1)
+union
+(SELECT
+	e.*,f.*
+FROM
+	tb_student a
+LEFT JOIN tb_student_grade b ON a.sid = b.sid
+LEFT JOIN tb_grade c ON b.gid = c.gid
+LEFT JOIN tb_test_grade d ON c.gid = d.gid
+LEFT JOIN tb_test e ON d.testid = e.testid
+left join tb_student_test f on f.testid = e.testid and f.sid = b.sid
+WHERE e.starttime < (select now()) and e.endtime > (select NOW()) and
+f.crediskey is null and a.sid = 1)
+     -->
+    <select id="getStuTestInfo" resultType="TestBean">
+       SELECT
+            e.*
+        FROM
+            tb_student a
+        LEFT JOIN tb_student_grade b ON a.sid = b.sid
+        LEFT JOIN tb_grade c ON b.gid = c.gid
+        LEFT JOIN tb_test_grade d ON c.gid = d.gid
+        LEFT JOIN tb_test e ON d.testid = e.testid
+        LEFT JOIN tb_student_test f ON e.testid = f.testid AND f.sid = b.sid
+        WHERE
+            f.crediskey IS NULL
+        AND e.endtime &gt; (SELECT NOW())
+        AND a.sid = #{sid}
+    </select>
+
+    <!-- 获取学生的历史考试信息 -->
+    <select id="findStuHistoryTest" resultType="TestBean">
+        SELECT
+            e.*,f.*
+        FROM
+            tb_student a
+        LEFT JOIN tb_student_grade b ON a.sid = b.sid
+        LEFT JOIN tb_grade c ON b.gid = c.gid
+        LEFT JOIN tb_test_grade d ON c.gid = d.gid
+        LEFT JOIN tb_test e ON d.testid = e.testid
+        LEFT JOIN tb_student_test f ON e.testid = f.testid AND f.sid = b.sid
+        WHERE
+            (f.crediskey IS not NULL OR e.endtime &lt; (SELECT NOW())) AND a.sid = #{sid}
+    </select>
+
+    <!-- 更改学生主观分数 -->
+    <update id="updateStudentQscore">
+        update tb_student_test set score=cscore,qscore=0 where sid=#{sid} and testid=#{testid}
+    </update>
+
+</mapper>

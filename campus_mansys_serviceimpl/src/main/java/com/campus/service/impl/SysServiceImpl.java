@@ -14,7 +14,7 @@ public class SysServiceImpl implements SysService {
     @Resource
     private SysMapper sysMapper;
 
-    public List<MenuBean> getMenuList() {
-        return sysMapper.getMenuList();
+    public List<MenuBean> getMenuList(Long rid) {
+        return sysMapper.getMenuList(rid);
     }
 }

@@ -5,5 +5,5 @@ import com.campus.entity.MenuBean;
 import java.util.List;
 
 public interface SysService {
-   public List<MenuBean> getMenuList();
+   public List<MenuBean> getMenuList(Long rid);
 }

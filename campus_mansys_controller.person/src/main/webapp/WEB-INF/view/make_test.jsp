@@ -21,8 +21,8 @@
 
     //定义一个6位随机数
     var random = "";
-    for (var i=0;i<6;i++){
-        random+=Math.floor(Math.random()*10);
+    for (var i = 0; i < 6; i++) {
+        random += Math.floor(Math.random() * 10);
     }
 
     var flag = false;
@@ -30,28 +30,28 @@
     /**
      * 验证考试名称的唯一性
      */
-    function uniTestname(){
+    function uniTestname() {
         //获取考试名称的值
         var testname = $("#testname").val();
-        if(testname==""){
-            $("#name").css("color","red");
+        if (testname == "") {
+            $("#name").css("color", "red");
             $("#name").text("考试名称不能为空！");
-        }else{
+        } else {
 
             $.ajax({
-                url:"/teacher/uniTestname.do?"+random,     //请求路径
-                type:"post",     //请求方式
-                data:{
-                    testname:testname
+                url: "/teacher/uniTestname.do?" + random,     //请求路径
+                type: "post",     //请求方式
+                data: {
+                    testname: testname
                 },      //传到后台的数据
-                dataType:"json",        //服务器返回的数据类型
-                success:function(result){
-                    if(result.success=="success"){
-                        $("#name").css("color","green");
+                dataType: "json",        //服务器返回的数据类型
+                success: function (result) {
+                    if (result.success == "success") {
+                        $("#name").css("color", "green");
                         $("#name").text(result.message);
                         flag = true;
-                    }else{
-                        $("#name").css("color","red");
+                    } else {
+                        $("#name").css("color", "red");
                         $("#name").text(result.message);
                         $("#testname").focus();
                     }
@@ -62,25 +62,25 @@
 
 
     //上传Excel表格
-    function importTest(){
+    function importTest() {
         var formData = new window.FormData();
-        formData.append("filename",document.querySelector('input[type=file]').files[0]);
+        formData.append("filename", document.querySelector('input[type=file]').files[0]);
         $.ajax({
             url: "/file/fileUpload.do?" + random,    //请求路径
             type: "post",       //请求方式
-            data:formData,      //返回到后台的数据
-            dataType:"json",    //服务器返回的数据类型
-            cache:false,        //是否缓存
-            processData:false,
-            contentType:false,
-            success:function(data){
-                if(data.success=="success"){
-                    $("#file").css("color","green");
+            data: formData,      //返回到后台的数据
+            dataType: "json",    //服务器返回的数据类型
+            cache: false,        //是否缓存
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.success == "success") {
+                    $("#file").css("color", "green");
                     $("#file").text("上传成功！");
                     $("[name='totalscore']").val(data.data2);
                     flag = true;
-                }else{
-                    $("#file").css("color","red");
+                } else {
+                    $("#file").css("color", "red");
                     $("#file").text(data.message);
                 }
             }
@@ -88,13 +88,13 @@
     }
 
     //发布试题
-    function makeTest(){
-       // var form = $("form").serialize();
+    function makeTest() {
+        // var form = $("form").serialize();
 
         //考卷名称
         var testname = $("#testname").val();
-        if(testname=="" || testname==null){
-            $("#name").css("color","red");
+        if (testname == "" || testname == null) {
+            $("#name").css("color", "red");
             $("#name").text("考试名称不能为空哦！");
         }
         //总分数
@@ -104,18 +104,19 @@
         //考试时长
         var testtime = $("#testtime").val();
 
-        //考试对应班级id
-        var gids = "";
-        var gid = $("[name='gids']:checked");
-        for (let i = 0; i < gid.length; i++) {
-            gids+=gid[i].value+",";
-        }
-        gids = gids.substring(0,gids.length-1);
+        // //考试对应班级id
+        // var gids = "";
+        // var gid = $("[name='gids']:checked");
+        // for (let i = 0; i < gid.length; i++) {
+        //     gids += gid[i].value + ",";
+        // }
+        // gids = gids.substring(0, gids.length - 1);
+
         //考试开始时间
-        var starttimeS=$("#starttime").val();
+        var starttimeS = $("#starttime").val();
 
         //获取当前的一个Date类型 用于讲选择的时间存放
-        var statime= new Date();
+        var statime = new Date();
         statime.setFullYear(parseInt(starttimeS.substring(0, 4)));
         statime.setMonth(parseInt(starttimeS.substring(5, 7)) - 1);
         statime.setDate(parseInt(starttimeS.substring(8, 10)));
@@ -124,62 +125,50 @@
         // alert(statime)
 
         //考试结束时间
-        var endtime=$("#endtime").val();
+        var endtime = $("#endtime").val();
         //获取当前的一个Date类型 用于讲选择的时间存放
-        var entime= new Date();
+        var entime = new Date();
         entime.setFullYear(parseInt(endtime.substring(0, 4)));
         entime.setMonth(parseInt(endtime.substring(5, 7)) - 1);
         entime.setDate(parseInt(endtime.substring(8, 10)));
         entime.setHours(parseInt(endtime.substring(11, 13)));
         entime.setMinutes(parseInt(endtime.substring(14, 16)));
 
-        if(flag==true){
+        if (flag == true) {
             //发送ajax请求，保存试题
             $.ajax({
                 url: "/teacher/makeTest.do",    //请求路径
                 type: "post",       //请求方式
-                data:{
-                    testname:testname,
-                    totalscore:totalscore,
-                    passscore:passscore,
-                    starttime:statime,
-                    endtime:entime,
-                    testtime:testtime,
-                    gids:gids
+                data: {
+                    testname: testname,
+                    totalscore: totalscore,
+                    passscore: passscore,
+                    starttime: statime,
+                    endtime: entime,
+                    testtime: testtime,
                 },      //返回到后台的数据
-                dataType:"json",    //服务器返回的数据类型
-                success:function(data){
-                    if(data.success=="success"){
+                dataType: "json",    //服务器返回的数据类型
+                success: function (data) {
+                    if (data.success == "success") {
                         alert(data.message);
-                        location.href="/teacher/getDuliTestList.do";
-                    }else{
+                        location.href = "/teacher/getDuliTestList.do";
+                    } else {
                         alert(data.message);
                     }
                 }
             });
-        }else{
+        } else {
 
         }
-
     }
-
-
-    // //阻止表单提交
-    // function check_all(){
-    //
-    //     if(flag==false){
-    //         return false;
-    //     }else{
-    //         return true;
-    //     }
-    // }
 </script>
 <html>
 <head>
     <title>发布试题界面</title>
 </head>
 <body>
-    <center>
+<center>
+    <div id="vuediv">
         <h1>发布试题界面</h1>
         <form action="/teacher/goMakeTest.do" method="post" enctype="multipart/form-data" onsubmit="return check_all()">
             <table border="1" rules="all" align="center">
@@ -201,15 +190,15 @@
                 <tr>
                     <td>总分</td>
                     <td>
-                        <input type="text" name="totalscore" id="totalscore"  placeholder="上传试题之后自动生成" readonly>
+                        <input type="text" name="totalscore" id="totalscore" placeholder="上传试题之后自动生成" readonly>
                         <span><font id="total"></font></span>
                     </td>
                 </tr>
                 <tr>
                     <td>通过分数</td>
                     <td>
-                        <input type="text" name="passscore" id="passscore" placeholder="通过分数不能为空哦！">
-                        <span><font id="pass"></font></span>
+                        <input type="text" name="passscore" onblur="panDuanScore()" id="passscore" placeholder="通过分数不能为空哦！">
+                        <span><font id="pass" color="red"></font></span>
                     </td>
                 </tr>
                 <tr>
@@ -236,9 +225,17 @@
                 <tr>
                     <td>考试班级</td>
                     <td>
-                        <c:forEach items="${gradeList}" var="grade">
-                            <input type="checkbox" name="gids" value="${grade.gid}">${grade.gname}<br>
-                        </c:forEach>
+                        <span v-for="(g,gindex) in gradelist">
+                            <input type="checkbox" checked name="gid" v-model="g.gid" v-bind:value="g.gid">{{g.gname}}
+                            阅卷老师：<select v-model="g.tid" :name="gindex">
+                                <option v-for="t in teacherlist" v-bind:value="t.tid">
+                                    {{t.tname}}
+                                </option>
+                            </select><br>
+                        </span>
+                        <input type="button" value="保存阅卷" @click="saveGradeTeacher()">
+                        <input type="button" value="重新选择" @click="getGradeAndTeacher()">
+                        <span id="yuejuan" style="color:red;"></span>
                     </td>
                 </tr>
                 <tr>
@@ -251,6 +248,23 @@
                 </tr>
             </table>
         </form>
-    </center>
+    </div>
+</center>
 </body>
 </html>
+<script type="text/javascript" src="../../vuejs/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="../../vuejs/axios-0.18.0.js"></script>
+<script type="text/javascript" src="../../vuejs/make_test.js"></script>
+<script type="text/javascript" src="../../js/jquery-1.8.2.js"></script>
+<script type="text/javascript">
+    function panDuanScore(){
+        var passscore = $("#passscore").val();
+        var totalscore = $("#totalscore").val();
+        if(passscore>totalscore){
+            document.getElementById("pass").innerHTML="通过分数不能大于总分";
+            $("#passscore").focus();
+        }else{
+            document.getElementById("pass").innerHTML="";
+        }
+    }
+</script>

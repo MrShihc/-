@@ -60,7 +60,24 @@ public class Student implements Serializable {
     private String address;
 
     /**
+     * 角色id
+     */
+    private Long rid;
+
+    /**
+     * 学生邮箱
+     */
+    private String seamil;
+
+    /**
+     * 学生验证码
+     */
+    private String scode;
+
+    /**
      * 班级的实体bean   呈现出一对一的关系
      */
     private Grade grade = new Grade();
+
+
 }

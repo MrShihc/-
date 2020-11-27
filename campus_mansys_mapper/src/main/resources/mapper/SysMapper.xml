@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.campus.mapper.SysMapper">
     <select id="getMenuList" resultType="MenuBean">
-        select * from tb_menu
+        SELECT
+            *
+        FROM
+            tb_role_menu a
+        left join tb_menu b on a.mid = b.mid where
+            a.rid =#{rid}
     </select>
 </mapper>

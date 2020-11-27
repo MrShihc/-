@@ -21,5 +21,6 @@ public class Grade implements Serializable {
      */
     private Long gid;
     private String gname;
+    private Long tid;
 
 }

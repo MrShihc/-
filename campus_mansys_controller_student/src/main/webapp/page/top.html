@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>头界面</title>
 </head>
+<script type="text/javascript" src="../vuejs/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="../vuejs/axios-0.18.0.js"></script>
 <body>
-    <h1>欢迎同学进入学生界面</h1>
+    <center>
+        <div id="studiv">
+            <h2>
+                欢迎
+                <font id="stuname" color="red" size="10px">{{stuname}}</font>
+                同学进入学生界面
+                <a href="javascript:void(0)" @click="logOut()"
+                   style="float:right;text-decoration:none;margin-right:30px;margin-top:20px;">
+                    退出登录
+                </a>
+            </h2>
+        </div>
+    </center>
 </body>
 </html>
+<!-- 编写自己的vue代码 -->
+<script type="text/javascript">
+    var vm = new Vue({
+        el:"#studiv",     //表示监管区域
+        data:{
+            stuname:""
+        },
+        methods:{
+            //获取学生姓名
+            getStuName:function(){
+                var _this = this;
+                axios.get("/student/getStuName.do").then(function(response){
+                    if(response.data.flag){
+                        _this.stuname = response.data.message;
+                    }else{
+                        console.log(response.data.message);
+                    }
+                }).catch(function(error){
+                    console.log(error);
+                })
+            },
+            //退出登录
+            logOut:function(){
+                var _this = this;
+                axios.post("/student/logOut.do").then(function(response){
+                    if(response.data.flag){
+                        alert(response.data.message);
+                        window.parent.location.href="../stu_login.html";
+                    }else{
+                        alert(response.data.message);
+                    }
+                }).catch(function(error){
+                   console.log(error);
+                });
+            }
+        },
+        created:function(){
+            this.getStuName();
+        }
+    });
+</script>

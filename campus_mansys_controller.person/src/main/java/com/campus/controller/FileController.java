@@ -2,18 +2,14 @@ package com.campus.controller;
 
 import com.campus.entity.Exam;
 import com.campus.utils.PoiImportExcel;
-import com.campus.utils.Result;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.junit.Test;
+import com.campus.common.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import sun.security.provider.MD5;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.MessageDigest;
 import java.util.List;
 
 /**

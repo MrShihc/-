@@ -4,12 +4,8 @@
 
     <!-- 保存考试和班级之间的关联信息 -->
     <insert id="saveTestGradeInfo">
-        	INSERT INTO `tb_test_grade`(`gid`, `testid`)
-        	VALUES
-        	<foreach collection="gids" item="gid" separator=",">
-        	    (#{gid},#{testid})
-            </foreach>
-
+        	INSERT INTO `tb_test_grade`(`gid`, `testid`,tid)
+        	VALUES(#{gid},#{testid},#{tid})
     </insert>
 
 </mapper>

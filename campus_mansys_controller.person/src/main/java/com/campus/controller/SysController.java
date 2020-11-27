@@ -2,12 +2,14 @@ package com.campus.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.campus.entity.MenuBean;
+import com.campus.entity.Teacher;
 import com.campus.service.SysService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -26,11 +28,13 @@ public class SysController {
      * @return
      */
     @RequestMapping("/getMenuJson")
-    public String getMenuJson(Model model){
-        List<MenuBean> list = sysService.getMenuList();
-        String json = JSONArray.toJSONString(list);
-        model.addAttribute("json",json);
-        System.out.println(json);
+    public String getMenuJson(Model model, HttpServletRequest request){
+        Teacher teacher = (Teacher)request.getSession().getAttribute("teacher");
+        if(teacher!=null){
+            List<MenuBean> list = sysService.getMenuList(teacher.getRid());
+            String json = JSONArray.toJSONString(list);
+            model.addAttribute("json",json);
+        }
         return "left";
     }
 

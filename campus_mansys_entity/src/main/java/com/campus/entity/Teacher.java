@@ -45,4 +45,9 @@ public class Teacher implements Serializable {
      * 老师密码
      */
     private String pwd;
+
+    /**
+     * 角色id
+     */
+    private Long rid;
 }

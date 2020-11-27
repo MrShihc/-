@@ -14,6 +14,9 @@
 	<!--开启spring自动扫描，扫描com下所有的包  -->
 	<context:component-scan base-package="com.campus"/>
 
+	<!-- 把redis交给spring -->
+	<import resource="redis-context.xml" />
+
 	<!--dataSource-->
 	 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生历史试卷页面</title>
+</head>
+<body>
+<center>
+    <div id="stutesthistorydiv">
+        <h1>学生历史试卷页面</h1>
+        <table border="1" align="center" rules="all">
+            <tr align="center">
+                <th>编号</th>
+                <th>考试名称</th>
+                <th>总分数</th>
+                <th>通过分数</th>
+                <th>考试时长(分钟)</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>发布人</th>
+                <th>客观分数</th>
+                <th>主观分数</th>
+                <th>总得分</th>
+                <th>总用时</th>
+                <th>是否通过</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="my in stutestlist" align="center">
+                <td>{{my.testid}}</td>
+                <td>{{my.testname}}</td>
+                <td>{{my.totalscore}}</td>
+                <td>{{my.passscore}}</td>
+                <td>{{my.testtime}}</td>
+                <td>{{my.starttime}}</td>
+                <td>{{my.endtime}}</td>
+                <td><font color="red">{{my.testauthor}}</font></td>
+                <td>{{my.cscore}}</td>
+                <td>{{my.qscore}}</td>
+                <td>{{my.score}}</td>
+                <td>{{my.stesttime}}</td>
+                <td>
+                    {{my.score==null && my.crediskey==null?'未参加':my.passscore > my.score?'未通过':my.passscore < my.score?'已通过':''}}
+                </td>
+                <td>
+                    <button @click="getStudengHistoryTest(my.qscore,my.crediskey)">{{my.qscore==null?'未阅卷':'查看试卷'}}</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</center>
+</body>
+</html>
+<script type="text/javascript" src="../vuejs/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="../vuejs/axios-0.18.0.js"></script>
+<script type="text/javascript" src="test_history.js"></script>

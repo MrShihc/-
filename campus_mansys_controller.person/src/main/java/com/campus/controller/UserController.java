@@ -2,7 +2,7 @@ package com.campus.controller;
 
 import com.campus.entity.*;
 import com.campus.service.UserService;
-import com.campus.utils.Result;
+import com.campus.common.Result;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;

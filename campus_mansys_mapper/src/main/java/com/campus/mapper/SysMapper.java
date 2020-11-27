@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface SysMapper {
 
-
-    public List<MenuBean> getMenuList();
+    //根据角色id查询菜单
+    public List<MenuBean> getMenuList(Long rid);
 }

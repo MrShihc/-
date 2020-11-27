@@ -1,12 +1,15 @@
 package com.campus.controller;
 
+import com.campus.common.TestVo;
 import com.campus.entity.Grade;
+import com.campus.entity.Teacher;
 import com.campus.service.TeacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -18,15 +21,25 @@ public class SkipController {
 
     @Resource
     private TeacherService teacherService;
-
     /**
-     * 跳转至发布试题界面，并根据当前登录人id，把这个登录人发布的班级查询出来，并展示给页面
+     * 跳转至发布试题界面，
      */
     @RequestMapping("/goMakeTest")
-    public String goMakeTest(Model model){
-       Long tid = 1L;
-       List<Grade> gradeList =  teacherService.getCurLoginPeoGrade(tid);
-       model.addAttribute("gradeList",gradeList);
+    public String goMakeTest(){
+       //返回到发布试题界面
        return "make_test";
+    }
+
+    /**
+     * 跳转至阅卷管理界面,并根据老师id查询出该老师可以阅卷的信息
+     */
+    @RequestMapping("/goReadManager")
+    public String goReadManager(Model model, HttpServletRequest request){
+
+        Teacher teacher = (Teacher)request.getSession().getAttribute("teacher");
+//        Long tid = 1L ;
+        List<TestVo> readInfo = teacherService.getReadInfo(teacher.getTid());
+        model.addAttribute("readInfo",readInfo);
+        return "read_manager";
     }
 }

@@ -4,6 +4,11 @@
            xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
            version="3.0">
+    <welcome-file-list>
+        <welcome-file>stu_login.html</welcome-file>
+        <welcome-file>/page/main.html</welcome-file>
+    </welcome-file-list>
+
     <!--乱码处理-->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
@@ -21,6 +26,22 @@
         <filter-name>characterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!-- 只过滤controller,.do的资源 -->
+    <filter>
+        <filter-name>FilterController</filter-name>
+        <filter-class>com.campus.filter.FilterController</filter-class>
+        <init-param>
+            <param-name>notFilterUrl</param-name>
+            <param-value>/stuLogin.do,/goEamil.do</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterController</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+
+
     <!--springMVC的核心控制器-->
     <servlet>
         <servlet-name>spring-mvc</servlet-name>

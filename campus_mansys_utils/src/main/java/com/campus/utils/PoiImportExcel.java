@@ -1,5 +1,6 @@
 package com.campus.utils;
 
+import com.campus.common.Result;
 import com.campus.entity.Exam;
 import com.campus.entity.ExamOption;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -244,6 +245,11 @@ public class PoiImportExcel {
             }
             exam.getOptions().add(oA);
             exam.getOptions().add(oB);
+        }else if("填空题".equals(value) || "问答题".equals(value)){
+
+        }else{
+            result.setSuccess("fail");
+            result.setMessage("题型错误！");
         }
     }
 
@@ -450,6 +456,11 @@ public class PoiImportExcel {
             }
             exam.getOptions().add(oA);
             exam.getOptions().add(oB);
+        }else if("填空题".equals(value) || "问答题".equals(value)){
+
+        }else{
+            result.setSuccess("fail");
+            result.setMessage("题型错误！");
         }
     }
 

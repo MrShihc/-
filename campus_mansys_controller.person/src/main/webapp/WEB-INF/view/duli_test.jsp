@@ -43,7 +43,7 @@
                         <fmt:formatDate value="${test.endtime}" pattern="yyyy-MM-dd HH:mm:ss" />
                     </td>
                     <td><font color="red">${test.testauthor}</font></td>
-                    <td><a href="#">查询试卷</a></td>
+                    <td></td>
                 </tr>
             </c:forEach>
 

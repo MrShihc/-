@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的考试界面</title>
+</head>
+<body>
+    <center>
+       <div id="stutestdiv">
+           <h1>我的考试页面</h1>
+           <table border="1" align="center" rules="all">
+               <tr align="center">
+                   <th>编号</th>
+                   <th>考试名称</th>
+                   <th>总分数</th>
+                   <th>通过分数</th>
+                   <th>考试时长(分钟)</th>
+                   <th>开始时间</th>
+                   <th>结束时间</th>
+                   <th>发布人</th>
+                   <th>操作</th>
+               </tr>
+               <tr v-for="my in stutestlist" align="center">
+                   <td>{{my.testid}}</td>
+                   <td>{{my.testname}}</td>
+                   <td>{{my.totalscore}}</td>
+                   <td>{{my.passscore}}</td>
+                   <td>{{my.testtime}}</td>
+                   <td>{{my.starttime}}</td>
+                   <td>{{my.endtime}}</td>
+                   <td><font color="red">{{my.testauthor}}</font></td>
+                   <td>
+                       <button @click="goTest(my)">{{my.testStatus}}</button>
+                   </td>
+               </tr>
+           </table>
+       </div>
+    </center>
+</body>
+</html>
+<script type="text/javascript" src="../vuejs/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="../vuejs/axios-0.18.0.js"></script>
+<script type="text/javascript" src="test_my.js"></script>

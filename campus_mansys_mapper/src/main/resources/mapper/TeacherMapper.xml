@@ -30,4 +30,69 @@
         INSERT INTO `tb_test`(`testname`, `totalscore`, `passscore`, `testtime`, `starttime`, `endtime`, `updatetime`, `testauthor`, `authorid`)
         VALUES (#{testname},#{totalscore},#{passscore},#{testtime},#{starttime},#{endtime},#{updatetime},#{testauthor},#{authorid})
     </insert>
+
+    <!-- 查询出老师的所有信息 -->
+    <select id="getTeacher" resultType="Teacher">
+        SELECT * FROM `tb_teacher`
+    </select>
+
+    <!-- 根据老师id查询出考试信息，以及所在班级信息 -->
+    <select id="getReadInfo" resultType="com.campus.common.TestVo">
+        SELECT
+            a.*, c.*
+        FROM
+            tb_test a
+        LEFT JOIN tb_test_grade b ON a.testid = b.testid
+        LEFT JOIN tb_grade c ON c.gid = b.gid
+        WHERE
+            b.tid = #{tid}
+    </select>
+
+    <!-- 获取单个班级的考试总人数 -->
+    <select id="getCounts" resultType="map">
+        SELECT
+            count(a.cscore) totalcount,
+            (
+                count(a.cscore) - count(a.qscore)
+            ) nocount
+        FROM
+            tb_student_test a
+        LEFT JOIN tb_student_grade b ON a.sid = b.sid
+        WHERE
+            a.testid = #{testid}
+        AND b.gid = #{gid}
+    </select>
+
+    <!-- 根据班级id以及考试id查询出该老师可以阅卷的班级的学生信息 -->
+    <select id="readTestStudent" resultType="TestBean">
+        SELECT
+            a.sname,b.*
+        FROM
+            tb_student a
+        LEFT JOIN tb_student_test b ON a.sid = b.sid
+        left join tb_student_grade c on a.sid = c.sid
+        WHERE
+            b.testid = #{testid} and c.gid = #{gid}
+    </select>
+
+    <!-- 根据crediskey查询出学生和考试关联的信息 -->
+    <select id="getStudentTestByCrediskey" resultType="TestBean">
+        select * from tb_student_test where crediskey = #{crediskey}
+    </select>
+
+    <!-- 根据crediskey保存学生主观分数 -->
+    <update id="updateStuTestQscoreAndScore">
+        update tb_student_test set score = (cscore+#{qscore}),qscore=#{qscore} where crediskey=#{crediskey}
+    </update>
+
+    <!-- 老师根据账户名去登录 -->
+    <select id="getLogin" resultType="Teacher">
+        SELECT
+            *
+        FROM
+            tb_teacher
+        WHERE
+            taccount = #{taccount}
+    </select>
+
 </mapper>

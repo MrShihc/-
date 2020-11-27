@@ -68,4 +68,49 @@ public class TestBean implements Serializable {
      */
     private Long authorid;
 
+    /**
+     * 得分
+     */
+    private Double score;
+
+    /**
+     * 客观分数
+     */
+    private Double cscore;
+
+    /**
+     * 主观分数
+     */
+    private Double qscore;
+
+    /**
+     * 学生考试时长
+     */
+    private Long stesttime;
+
+    /**
+     * 学生考试结束时间
+     */
+    private Date testendtime;
+
+    /**
+     * 主观rediskey
+     */
+    private String qrediskey;
+
+    /**
+     * 客观rediskey
+     */
+    private String crediskey;
+
+    /**
+     * 是否在考试时间
+     */
+    private String testStatus;
+
+    /**
+     * 阅卷时需要的
+     */
+    private String sname;
+
 }

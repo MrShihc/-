@@ -45,4 +45,11 @@ public class Exam implements Serializable {
     private Long testid;
 
     private List<ExamOption> options = new ArrayList<ExamOption>();
+
+    /**
+     * 我的作答
+     */
+    private String myanswer;
+
+    private Double panfen;
 }

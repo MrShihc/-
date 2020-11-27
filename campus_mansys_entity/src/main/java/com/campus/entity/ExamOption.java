@@ -35,4 +35,9 @@ public class ExamOption implements Serializable {
      * 试题编号
      */
     private Long examid;
+
+    /**
+     * 我的选择
+     */
+    private String mytrue;
 }

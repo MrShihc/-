@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>历史试卷详情界面</title>
+</head>
+<body>
+<h1>历史试卷详情界面</h1>
+<div id="historylook">
+
+    <table v-for="(exam,examindex) in examinfo">
+        <tr>
+            <td align="left">{{examindex+1}}、</td>
+            <td>{{exam.etype}}:({{exam.efenzhi}}分)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>&nbsp;&nbsp;{{exam.ename}}</td>
+        </tr>
+        <tr v-if="exam.etype=='单选题' || exam.etype=='判断题'" v-for="(op,opindex) in exam.options">
+            <td></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" :name="examindex"
+                                               v-bind:value="op.optionid" v-model="op.mytrue">
+                <span v-if="opindex=='0'">A:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='1'">B:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='2'">C:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='3'">D:&nbsp;&nbsp;</span>
+                &nbsp;&nbsp;{{op.oname}}
+                <span v-if="op.istrue==1"><font color="red">正确答案</font></span>
+            </td>
+        </tr>
+        <tr v-if="exam.etype=='多选题'" v-for="(op,opindex) in exam.options">
+            <td></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" :name="100+examindex" v-bind:value="op.optionid"
+                                               v-model="op.mytrue">
+                <span v-if="opindex=='0'">A:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='1'">B:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='2'">C:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='3'">D:&nbsp;&nbsp;</span>
+                {{op.oname}}
+                <span v-if="op.istrue==1"><font color="red">正确答案</font></span>
+            </td>
+        </tr>
+        <tr v-if="exam.etype=='问答题' || exam.etype=='填空题'">
+            <td></td>
+            <td>
+                <textarea v-model="exam.myanswer" placeholder="请进行答题：" cols="40px" rows="10px"></textarea>
+                <font color="aqua">得分：{{exam.panfen}}</font>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    //获取地址栏中的参数信息
+    var url = location.search;
+    //进行分割获取到考试id
+    crediskey = url.split("=")[1];
+</script>
+<script type="text/javascript" src="../vuejs/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="../vuejs/axios-0.18.0.js"></script>
+<script type="text/javascript" src="test_history_look.js"></script>

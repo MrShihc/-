@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>开始考试界面</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .btn {
+        width: 100px;
+        height: 100px;
+        margin: 50px auto 0;
+        font-size: 16px;
+        color: #fff;
+        text-align: center;
+        line-height: 100px;
+        border-radius: 100px;
+        background: #3385ff;
+    }
+
+    .btn:hover {
+        box-shadow: 0 0 10px #77aeff;
+        cursor: pointer;
+    }
+
+    h4 {
+        font-size: 50px;
+        color: red;
+        text-align: center;
+    }
+
+    h4.active {
+        animation: count .5s;
+    }
+
+    @keyframes count {
+        from {
+            transform: scale(.1);
+            opacity: 1;
+        }
+        to {
+            transform: scale(3.5);
+            opacity: 0;
+            display: none;
+        }
+    }
+</style>
+<body>
+<h1>答题界面</h1>
+<div id="studenttestdiv">
+
+    <!--------------------   定时器区域  ------------------------>
+    <div id="timer" style="color:red;font-size:20px;
+            position:fixed;top:20px; right:50px;
+            background:#CBE2F7;width:220px;
+            height: 50px;border-radius:10px">
+    </div>
+    <div class="box" style="position:fixed;top:20px; right:50px;">
+        <h4 style="display:none;" id="h4">10</h4>
+    </div>
+    <!--------------------   定时器区域  ------------------------>
+
+
+    <table v-for="(exam,examindex) in examinfo">
+        <tr>
+            <td align="left">{{examindex+1}}、</td>
+            <td>{{exam.etype}}:({{exam.efenzhi}}分)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>&nbsp;&nbsp;{{exam.ename}}</td>
+        </tr>
+        <tr v-if="exam.etype=='单选题' || exam.etype=='判断题'" v-for="(op,opindex) in exam.options">
+            <td></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" :name="examindex"
+                                               v-bind:value="op.optionid" v-model="op.mytrue">
+                <span v-if="opindex=='0'">A:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='1'">B:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='2'">C:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='3'">D:&nbsp;&nbsp;</span>
+                {{op.oname}}
+            </td>
+        </tr>
+        <tr v-if="exam.etype=='多选题'" v-for="(op,opindex) in exam.options">
+            <td></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" :name="100+examindex" v-bind:value="op.optionid"
+                                               v-model="op.mytrue">
+                <span v-if="opindex=='0'">A:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='1'">B:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='2'">C:&nbsp;&nbsp;</span>
+                <span v-if="opindex=='3'">D:&nbsp;&nbsp;</span>
+                {{op.oname}}
+            </td>
+        </tr>
+        <tr v-if="exam.etype=='问答题' || exam.etype=='填空题'">
+            <td></td>
+            <td>
+                <textarea v-model="exam.myanswer" placeholder="请进行答题：" cols="40px" rows="10px"></textarea>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <input type="button" @click="savestuToSubmit()" value="交卷">
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    //获取地址栏中的参数信息
+    var url = location.search;
+    //进行分割获取到考试id
+    testid = url.split("=")[1];
+</script>
+<script type="text/javascript" src="../vuejs/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="../vuejs/axios-0.18.0.js"></script>
+<script type="text/javascript" src="test_student.js"></script>

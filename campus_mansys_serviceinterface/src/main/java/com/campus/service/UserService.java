@@ -4,7 +4,7 @@ import com.campus.entity.CityBean;
 import com.campus.entity.Grade;
 import com.campus.entity.Student;
 import com.campus.entity.UserBean;
-import com.campus.utils.Result;
+import com.campus.common.Result;
 
 import java.util.List;
 

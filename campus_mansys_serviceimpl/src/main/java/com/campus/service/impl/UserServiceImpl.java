@@ -6,7 +6,7 @@ import com.campus.entity.Student;
 import com.campus.entity.UserBean;
 import com.campus.mapper.UserMapper;
 import com.campus.service.UserService;
-import com.campus.utils.Result;
+import com.campus.common.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
